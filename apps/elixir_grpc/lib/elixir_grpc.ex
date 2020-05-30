@@ -9,23 +9,35 @@ defmodule ElixirGrpc.User.Server do
   use GRPC.Server, service: ElixirGrpc.User.Service
 
   def create(request, _stream) do
-    new_user =
-      UserDB.add_user(%{
+    {:ok, new_user} =
+      %ElixirGrpc.User{
         first_name: request.first_name,
         last_name: request.last_name,
         age: request.age
-      })
+      }
+      |> ElixirGrpc.Repo.insert()
 
-    ElixirGrpc.UserReply.new(new_user)
+    build_reply(new_user)
   end
 
   def get(request, _stream) do
-    user = UserDB.get_user(request.id)
+    user =
+      ElixirGrpc.User
+      |> ElixirGrpc.Repo.get(request.id)
 
     if user == nil do
       raise GRPC.RPCError, status: :not_found
     else
-      ElixirGrpc.UserReply.new(user)
+      build_reply(user)
     end
+  end
+
+  def build_reply(user) do
+    ElixirGrpc.UserReply.new(
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      age: user.age
+    )
   end
 end
