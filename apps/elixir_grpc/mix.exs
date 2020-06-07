@@ -28,9 +28,9 @@ defmodule ElixirGrpc.MixProject do
     [
       {:grpc, "~> 0.5.0-beta"},
       {:cowlib, "~>2.8.0", hex: :grpc_cowlib, override: true},
-      {:uuid, "~> 1.1" },
-      {:ecto, "~> 2.2.8" },
-      {:postgrex, ">= 0.0.0" }
+      {:uuid, "~> 1.1"},
+      {:ecto, "~> 2.2.8"},
+      {:postgrex, ">= 0.0.0"}
     ]
   end
 end

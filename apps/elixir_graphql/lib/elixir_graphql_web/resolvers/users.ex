@@ -7,11 +7,14 @@ defmodule ElixirGraphqlWeb.Resolvers.Users do
 
   def create_user(_parent, args, _resolution) do
     {:ok, channel} = GRPC.Stub.connect("localhost:50051")
-    request = ElixirGrpc.CreateRequest.new(
-      first_name: args.first_name,
-      last_name: args.last_name,
-      age: args.age
-    )
+
+    request =
+      ElixirGrpc.CreateRequest.new(
+        first_name: args.first_name,
+        last_name: args.last_name,
+        age: args.age
+      )
+
     channel |> ElixirGrpc.User.Stub.create(request)
   end
 end

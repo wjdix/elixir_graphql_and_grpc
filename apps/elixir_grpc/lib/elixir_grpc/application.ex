@@ -7,9 +7,10 @@ defmodule ElixirGrpc.Application do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
+
     children = [
       {GRPC.Server.Supervisor, {ElixirGrpc.Endpoint, 50_051}},
-      supervisor(ElixirGrpc.Repo, []),
+      supervisor(ElixirGrpc.Repo, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

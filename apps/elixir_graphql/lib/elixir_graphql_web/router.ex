@@ -13,5 +13,4 @@ defmodule ElixirGraphqlWeb.Router do
       interface: :simple,
       context: %{pubsub: ElixirGraphqlWeb.Endpoint}
   end
-
 end
